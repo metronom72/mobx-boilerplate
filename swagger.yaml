@@ -1,0 +1,14 @@
+openapi: 3.0.0
+# Added by API Auto Mocking Plugin
+servers:
+info:
+  description: API specification
+  title: API specification
+  version: "1.0.0"
+tags:
+  - name: subjecct
+    description: Service for subject
+paths:
+
+components:
+  schemas:

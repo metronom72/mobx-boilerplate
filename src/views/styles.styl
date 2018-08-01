@@ -1,0 +1,44 @@
+@import '../assets/variables.styl';
+
+a
+  &[disabled]
+    color: $cl-gray;
+    &:hover
+      cursor: not-allowed;
+
+body
+  color: $cl-dark;
+  font-size: 14px;
+
+.layout
+  display: flex;
+  min-height: 100vh;
+  @media (max-width: $cl-mobile-max)
+    max-width: 375px;
+    margin: 0 auto;
+    flex-direction: column;
+
+.page
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 75px 100px 10px;
+  @media (max-width: $cl-mobile-max)
+    padding: 35px 15px;
+
+.row
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  @media (max-width: $cl-mobile-max)
+    &--equivalent
+      flex-direction: column;
+
+.col
+  flex-grow: 1;
+  font-size: 16px;
+  
+.back
+  &__link
+    display: block;
+    padding-top: 20px;
