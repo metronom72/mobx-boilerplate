@@ -3,10 +3,7 @@
 Пример всех полей и их дефолтных значений можно найти в файле `default.config.json`
 ```
 {
-    "ENDPOINTS": {
-        "AUTH": "https://dev.pas.sdvor.com/api/bot/ZAUTH_TOKENS_API",
-        "API": "https://dev.pas.sdvor.com/api/bot/ZCL_IRONMAN_API"
-    },
+    "ENDPOINTS": {},
     "CONSTANTS": {
         "USER_TOKEN": "__TOKEN__",
         "DATA_STORAGE": "localStorage",
@@ -16,20 +13,11 @@
         "NOTIFICATION": 3000
     },
     "ROUTES": {
-        "GET_CODE": "get-code",
-        "GET_TOKEN": "get-token",
-        "DUMKA/NEW": "dumka/new",
-        "DUMKA": "dumka",
-        "FALLBACK": "dumka/new",
         "ROOT": ""
     },
-    "MOCK": {
-        "AUTH": true,
-        "TOKEN": "intention030708",
-        "PHONE": "+79829320283"
-    },
+    "MOCK": {},
     "DATABASE": {
-        "NAME": "ironman",
+        "NAME": "Sample",
         "VERSION": 1
     },
 }
@@ -72,10 +60,6 @@
 Объект `DATABASE` описывает данные необходимые для создания базы данных в IndexedDB
 
 Переменная `REACT_APP_DATABASE_NAME` описывает название базы данных, а `REACT_APP_DATABASE_VERSION` - версию базы данных
-
----
-
-Сервер запускается на порту который задается в переменной `HEALTHCHECK_PORT` или 3000 порту
 
 ### Описание процесса конфигурации и работы приложения
 
