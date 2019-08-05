@@ -1,14 +1,114 @@
-This is bilerplate for mobx applications.
+### Переменные окружения и за что они отвечают
 
-When I was creating this boilerplate, I have few goals:
-1. Configure applciation in the runtime
-2. Simpliest senlenium tests, except jest or ay other library. Simple write component screenshot it and test images.
-3. To create reusable boilerplate for fiew domains iin one business.
+Пример всех полей и их дефолтных значений можно найти в файле `default.config.json`
+```
+{
+    "ENDPOINTS": {
+        "AUTH": "https://dev.pas.sdvor.com/api/bot/ZAUTH_TOKENS_API",
+        "API": "https://dev.pas.sdvor.com/api/bot/ZCL_IRONMAN_API"
+    },
+    "CONSTANTS": {
+        "USER_TOKEN": "__TOKEN__",
+        "DATA_STORAGE": "localStorage",
+        "TOKEN_STORAGE": "localStorage"
+    },
+    "TIMEOUTS": {
+        "NOTIFICATION": 3000
+    },
+    "ROUTES": {
+        "GET_CODE": "get-code",
+        "GET_TOKEN": "get-token",
+        "DUMKA/NEW": "dumka/new",
+        "DUMKA": "dumka",
+        "FALLBACK": "dumka/new",
+        "ROOT": ""
+    },
+    "MOCK": {
+        "AUTH": true,
+        "TOKEN": "intention030708",
+        "PHONE": "+79829320283"
+    },
+    "DATABASE": {
+        "NAME": "ironman",
+        "VERSION": 1
+    },
+}
+```
 
-One think that connot be configured in runtime it is base url of application. It had to be set up in  the base tag in `<root>/public/index.html` or set up in the build environment or in file .env. Variable's name is `REACT_APP_BASE_URL` and example value - `/variable/`.
+Объект `ROUTES` не является конфигурируемым. Это набор констант для формирования ссылок на экраны внутри приложения
 
-After this in the prod environment we have to setup variable to config.json file or put it in the root diretory, because in this case Application will request it by url `<basepath>/config.json`. Base path might be specified in base tag or in config.json. Example of config.json located in `<root>/src/default.config.json`. Example config will be used in dev environment.
+---
 
-After this applciation will be configured and will show views from `<root>/views` folder.
+Объект `ENDPOINTS` описывает адреса для эндпонитов для обращения к API
 
-This boilerplate include swagger file.
+Переменная `ENDPOINTS.AUTH` задается через переменную окружения `REACT_APP_ENDPOINTS_AUTH`. И представляет собой ссылку на апи для авторизации
+
+Переменная `ENDPOINTS.API` задается через переменную окружения `REACT_APP_ENDPOINTS_API`. И представляет собой ссылку на апи, если не указано другое
+
+---
+
+Объект `CONSTANTS` описывает переменные которые не будут меняться в течении жизни приложения
+
+Переменная `CONSTANTS.USER_TOKEN` задается через переменную окружения `REACT_APP_USER_TOKEN`. И представляет собой название токена в хранилище
+
+Переменная `CONSTANTS.DATA_STORAGE` задается через переменную окружения `REACT_APP_CONSTANTS_DATA_STORAGE`. И представляет собой указание где будут хранится данные. По дефолту данные хранятся в IndexedDB.
+
+Переменная `CONSTANTS.TOKEN_STORAGE` задается через переменную окружения `REACT_APP_TOKEN_STORAGE`. И представляет собой указание где хранить токен (токн может хранитсяь в cookies или local storage). По дефолту токен хранится в localStorage.
+
+---
+
+Объект `TIMEOUTS` описывает переменные для всевозможных задержек.
+
+Переменная `TIMEOUTS.NOTIFICATION` задается через переменную окружения `REACT_APP_TIMEOUTS_NOTIFICATION`. И представляет собой количество мс перед удалением уведомления из хранилища
+
+---
+
+Объект `MOCK` описывает необходимость эмуляции данных. Сейчас есть толкьо эмуляция для авторизации. Работает только для `development` В продакшене будет игнорироваться.
+
+Описывается значение токена авторизации и телефона к которому привязан данный токен. Не задаются через переменные окружения
+
+---
+
+Объект `DATABASE` описывает данные необходимые для создания базы данных в IndexedDB
+
+Переменная `REACT_APP_DATABASE_NAME` описывает название базы данных, а `REACT_APP_DATABASE_VERSION` - версию базы данных
+
+---
+
+Сервер запускается на порту который задается в переменной `HEALTHCHECK_PORT` или 3000 порту
+
+### Описание процесса конфигурации и работы приложения
+
+Отдельный стор может отвечать за одну из следующих функциональных частей:
+
+1. Конфигурация
+2. Единые процессы для всех модедей
+3. Хрнилище моделей
+4. Отдельная модель
+
+Каждая модель в зависимости от того что доступно для нее обдадает теми или иными флагами
+
+fetchable
+`responseId` - представляет идентификатор модели в АПИ
+`sync` - флаг означающий синхронизацию с  АПИ
+
+creatable
+`isDraft` - флаг отвечающий за необходимость обновления в кэше
+`isSaving` - флаг представляющий прцоесс сохранения данных в АПИ
+
+updatable
+`isDraft` - флаг отвечающий за необходимость обновления в кэше
+`isSaving` - флаг представляющий прцоесс сохранения данных в АПИ
+
+removable
+`sync` - флаг отвечающий за синхронизацию в АПИ
+`isRemoved` - флаг показывающий что данные были удалены
+`removedAt` - флаг показывающий когда данные были удалены
+
+### Сборка приложения
+
+Для сборки приложения нужно выполнить следующие команды:
+
+`npm i && npm run build && npm run server`
+
+На выходе получается папка `./build`, а также запускается сервер на порту 5000 который отдает только `/healthcheck` о статусом 200, без тела запроса

@@ -1,5 +1,25 @@
 {
-  "BACKEND_ENDPOINT": "http://example.com/api/v1",
-  "PARTNER_NAME": "Partner's name",
-  "LOGO_BANK": "https://cdna.artstation.com/p/assets/images/images/011/918/274/large/matteo-caruso-gnomon.jpg?1532081824"
+  "CONSTANTS": {
+    "DATA_STORAGE": "indexedDB",
+    "TOKEN_STORAGE": "localStorage",
+    "USER_TOKEN": "__TOKEN__"
+  },
+  "DATABASE": {
+    "NAME": "sample",
+    "VERSION": 1
+  },
+  "ENDPOINTS": {
+    "API": "",
+    "AUTH": ""
+  },
+  "MOCK": {},
+  "PAGING": {
+    "PER_PAGE": 10
+  },
+  "ROUTES": {
+    "ROOT": "/"
+  },
+  "TIMEOUTS": {
+    "NOTIFICATION":3000
+  }
 }
