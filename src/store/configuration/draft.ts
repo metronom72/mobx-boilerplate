@@ -1,6 +1,6 @@
 import { ErrorType } from '@@store/error/types'
 import { NotificationType, NotificationTypes } from '@@store/notification/types'
-import { ICommonStore } from '@@store/types'
+import { FieldTypes, ICommonStore } from '@@store/types'
 import { notInit } from '@@utils/types'
 import uuid from 'uuid'
 import DefaultConfig from '../../default.config.json'
@@ -48,6 +48,58 @@ export class DraftConfigurationStore implements IConfigurationStore {
   public get storeName() {
     notInit()
     return 'Configuration'
+  }
+
+  public get editable() {
+    return true
+  }
+
+  public get rows() {
+    return [
+      {
+        fieldName: 'isProd',
+        fieldType: FieldTypes.TOGGLE,
+        title: 'Продакшн билд?',
+      },
+      {
+        fieldName: 'isDev',
+        fieldType: FieldTypes.TOGGLE,
+        title: 'Девелопмент билд?',
+      },
+      {
+        fieldName: 'isTest',
+        fieldType: FieldTypes.TOGGLE,
+        title: 'Тест билд?',
+      },
+      {
+        editble: true,
+        fieldName: 'online',
+        fieldType: FieldTypes.TOGGLE,
+        title: 'Находимся онлайн?',
+      },
+      {
+        editble: true,
+        fieldName: 'configured',
+        fieldType: FieldTypes.TOGGLE,
+        title: 'Приложение было успешно сконфигурировано?',
+      },
+      {
+        editble: true,
+        fieldName: 'isFetching',
+        fieldType: FieldTypes.TOGGLE,
+        title: 'Выполняется запрос?',
+      },
+      {
+        fieldName: 'environment',
+        fieldType: FieldTypes.INPUT,
+        title: 'Название окружения',
+      },
+      {
+        fieldName: 'config',
+        fieldType: FieldTypes.JSON,
+        title: 'Базовая Конфигурация',
+      },
+    ]
   }
 
   public stores: { [storeNameLowerCase: string]: ICommonStore } = {}
@@ -232,6 +284,11 @@ export class DraftConfigurationStore implements IConfigurationStore {
   }
 
   public deleteData = async (remoteUrl: string, message?: string): Promise<any> => {
+    notInit()
+    return
+  }
+
+  public clearStorage = () => {
     notInit()
     return
   }

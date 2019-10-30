@@ -37,10 +37,10 @@ const generateStorageResult = (
 })
 
 export class Storage extends Dexie implements IStorage {
-  public [DatabaseTablesEnum.TABLE_NAME]: Dexie.Table<YourType, string>
+  // public [DatabaseTablesEnum.TABLE_NAME]: Dexie.Table<YourType, string>
 
   private DEFAULT: {
-    PER_PAGE: number
+    PER_PAGE: number,
   }
 
   private configuration: IConfigurationStore
@@ -58,10 +58,10 @@ export class Storage extends Dexie implements IStorage {
     }
 
     this.version(config!.DATABASE.VERSION).stores({
-      [DatabaseTablesEnum.TABLE_NAME]: '++id,title,createdAt',
+      // [DatabaseTablesEnum.TABLE_NAME]: '++id,title,createdAt',
     })
 
-    this[DatabaseTablesEnum.TABLE_NAME] = this.table(DatabaseTablesEnum.TABLE_NAME)
+    // this[DatabaseTablesEnum.TABLE_NAME] = this.table(DatabaseTablesEnum.TABLE_NAME)
   }
 
   public remove = async (

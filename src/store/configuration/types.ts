@@ -1,8 +1,8 @@
 import { ErrorType } from '@@store/error/types'
 import { NotificationType } from '@@store/notification/types'
-import { ICommonStore, IStore } from '@@store/types'
+import { ICommonStore, IEditableStore, IStore } from '@@store/types'
 
-export interface IConfigurationStore extends IStore, INetwork, IEnvironment {
+export interface IConfigurationStore extends IStore, INetwork, IEnvironment, IEditableStore {
   /**
    * Объект всех доступных сторов
    */

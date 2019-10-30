@@ -6,6 +6,7 @@ import { INotificationsStore, NotificationType } from '@@store/notification/type
 import { inject, observer } from 'mobx-react'
 import React from 'react'
 import { Route, Router, Switch } from 'react-router-dom'
+import Stores from './stores'
 
 interface Props {
   configuration?: IConfigurationStore
@@ -15,7 +16,7 @@ interface Props {
 // tslint:disable-next-line: no-empty-interface
 interface State {}
 
-@inject('configuration', 'navigation', 'notifications', 'user')
+@inject('configuration', 'navigation', 'notifications')
 @observer
 export class Scenes extends React.Component<Props, State> {
   public render() {
@@ -37,6 +38,7 @@ export class Scenes extends React.Component<Props, State> {
                   <Sample />
                 </Route>
               </Switch>
+              <Stores />
             </div>
           </div>
         )}

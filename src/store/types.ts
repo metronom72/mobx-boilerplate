@@ -26,21 +26,58 @@ export interface ActionStatus<Model> {
   value?: Model
 }
 
-export interface ICommonModel<Model> {
-  isSaving: boolean
-  responseId: string | null
+export interface ICreatable<Model> {
   create: () => Promise<ActionStatus<Model>>
+}
+
+export interface IUpdatable<Model> {
   update: () => Promise<ActionStatus<Model>>
+}
+
+export interface IRemovable<Model> {
   remove: () => Promise<ActionStatus<Model>>
-  save: (minDelay: number, maxDelay: number) => Promise<void>
+}
+
+export interface ISyncable<Model> {
+  lastSync: Date | null
+  synced: boolean
+  isSyncing: boolean
+  sync: (minDelay: number, maxDelay: number) => Promise<ActionStatus<Model>>
+}
+
+export interface IFetchable<Model> {
+  fetchAll: () => Promise<Model[] | null>
+  fetching: boolean
+}
+
+export interface ICommonModel<Model> {
   data: Model
   isValid: boolean
 }
 
 export interface ICommonCollection<Model> {
-  fetching: boolean
-  fetchAll: () => Promise<Model[] | null>
-  sync: () => Promise<Model[] | ErrorType[]>
+  items: Array<ICommonModel<Model>>
+}
+
+export enum FieldTypes {
+  TOGGLE = 'toggle',
+  CHECKBOX = 'checkbox',
+  INPUT = 'input',
+  SELECT = 'select',
+  JSON = 'json',
+}
+
+export interface IDataView {
+  fieldName: string
+  fieldType: FieldTypes
+  title: string
+  variants?: Array<{ value: any; label: string }>
+  editable?: boolean
+}
+
+export interface IEditableStore {
+  editable: boolean
+  rows: IDataView[]
 }
 
 export type OrDataTypes = any
@@ -49,11 +86,12 @@ export type AndDataTypes = any
 /**
  * Доступные таблицы в кэше
  */
-/**
- * Доступные таблицы в кэше
- */
 export enum DatabaseTablesEnum {
-  TABLE_NAME = 'TABLE_NAME',
+  DUMKAS = 'dumkas',
+  TASKS = 'tasks',
+  TAGS = 'tags',
+  CLIENTS = 'clients',
+  MANAGERS = 'managers',
 }
 
 /**
@@ -86,7 +124,6 @@ export interface StorageResult {
  * Интерфейс Кэша
  */
 export interface IStorage {
-  // [DatabaseTablesEnum.TABLE_NAME]: Dexie.Table<YourType, string>
   /**
    * Выборка одной или нескольких записей
    */

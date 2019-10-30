@@ -1,7 +1,7 @@
 import { ErrorType, IErrorsStore } from '@@store/error/types'
 import { INavigationStore } from '@@store/navigation/types'
 import { INotificationsStore, NotificationType } from '@@store/notification/types'
-import { ICommonStore } from '@@store/types'
+import { FieldTypes, ICommonStore } from '@@store/types'
 import { checkSSL, deleteData, getData, postData, putData } from '@@utils/api-helpers'
 import { asyncForEach } from '@@utils/async'
 import invariant from 'invariant'
@@ -35,6 +35,59 @@ export class Configuration implements IConfigurationStore {
   public get isTest() {
     return this.environment === 'test'
   }
+
+  public readonly editable: boolean = true
+
+  public readonly rows = [
+    {
+      fieldName: 'mocked',
+      fieldType: FieldTypes.TOGGLE,
+      title: 'Тестовые данные?',
+    },
+    {
+      fieldName: 'isProd',
+      fieldType: FieldTypes.TOGGLE,
+      title: 'Продакшн билд?',
+    },
+    {
+      fieldName: 'isDev',
+      fieldType: FieldTypes.TOGGLE,
+      title: 'Девелопмент билд?',
+    },
+    {
+      fieldName: 'isTest',
+      fieldType: FieldTypes.TOGGLE,
+      title: 'Тест билд?',
+    },
+    {
+      editable: true,
+      fieldName: 'online',
+      fieldType: FieldTypes.TOGGLE,
+      title: 'Находимся онлайн?',
+    },
+    {
+      editable: true,
+      fieldName: 'configured',
+      fieldType: FieldTypes.TOGGLE,
+      title: 'Приложение было успешно сконфигурировано?',
+    },
+    {
+      editable: true,
+      fieldName: 'isFetching',
+      fieldType: FieldTypes.TOGGLE,
+      title: 'Выполняется запрос?',
+    },
+    {
+      fieldName: 'environment',
+      fieldType: FieldTypes.INPUT,
+      title: 'Название окружения',
+    },
+    {
+      fieldName: 'config',
+      fieldType: FieldTypes.JSON,
+      title: 'Базовая Конфигурация',
+    },
+  ]
 
   @observable public online = navigator && navigator.onLine
 
@@ -420,7 +473,7 @@ export class Configuration implements IConfigurationStore {
        */
       const regexp = /^\/+/
       invariant(
-        Object.values(SlashOperations).includes(localStart),
+        (Object.values(SlashOperations) as string[]).includes(localStart),
         'Start должен быть типом SlashOperations!'
       )
       if (localStart === SlashOperations.ADD) {
@@ -443,7 +496,7 @@ export class Configuration implements IConfigurationStore {
        */
       const regexp = /\/+$/
       invariant(
-        Object.values(SlashOperations).includes(localEnd),
+        (Object.values(SlashOperations) as string[]).includes(localEnd),
         'End должен быть типом SlashOperations!'
       )
       if (localEnd === SlashOperations.ADD) {
